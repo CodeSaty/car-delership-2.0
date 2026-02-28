@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #12121A;
+  --bg-card: #16161F;
+  --bg-card-hover: #1C1C28;
+  --border-subtle: rgba(201, 169, 98, 0.15);
+  --border-accent: rgba(201, 169, 98, 0.4);
+  --gold: #C9A962;
+  --gold-light: #E8D5A3;
+  --gold-dim: rgba(201, 169, 98, 0.1);
+  --platinum: #B8C4D0;
+  --text-primary: #F0F0F5;
+  --text-secondary: #8A8A9A;
+  --text-muted: #5A5A6A;
+  --status-available: #34D399;
+  --status-sold: #C9A962;
+  --status-transit: #60A5FA;
+  --danger: #EF4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ─────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ── Glass Card ────────────────────────── */
+.glass-card {
+  background: linear-gradient(135deg, rgba(22, 22, 31, 0.9), rgba(18, 18, 26, 0.7));
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 8px 32px rgba(201, 169, 98, 0.08);
+}
+
+/* ── KPI Card Glow ─────────────────────── */
+.kpi-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(201, 169, 98, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Gold Gradient Text ────────────────── */
+.gold-text {
+  background: linear-gradient(135deg, #C9A962, #E8D5A3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Table Styles ──────────────────────── */
+.premium-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.premium-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.premium-table td {
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.premium-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.premium-table tbody tr:hover {
+  background: rgba(201, 169, 98, 0.04);
+}
+
+.premium-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.premium-table tbody tr:nth-child(even):hover {
+  background: rgba(201, 169, 98, 0.04);
+}
+
+/* ── Status Badge ──────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.status-available {
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--status-available);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.status-sold {
+  background: rgba(201, 169, 98, 0.1);
+  color: var(--status-sold);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.status-transit {
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--status-transit);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+/* ── Sidebar ───────────────────────────── */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-link.active {
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(201, 169, 98, 0.15);
+}
+
+/* ── Button Styles ─────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #C9A962, #B8993A);
+  color: #0A0A0F;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #E8D5A3, #C9A962);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(201, 169, 98, 0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: transparent;
+  color: var(--gold);
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid var(--border-accent);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: var(--gold-dim);
+}
+
+/* ── Input Styles ──────────────────────── */
+.input-dark {
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-dark:focus {
+  border-color: var(--gold);
+}
+
+.input-dark::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Animations ────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-stagger-1 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.animate-stagger-2 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animate-stagger-3 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.animate-stagger-4 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+/* ── Recharts Custom ───────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.04);
+}
+
+.recharts-text {
+  fill: var(--text-secondary);
+  font-size: 12px;
+}
