@@ -15,6 +15,7 @@ class VehicleStatusEnum(str, Enum):
     AVAILABLE = "Available"
     SOLD = "Sold"
     IN_TRANSIT = "In-Transit"
+    BOOKED = "Booked"
 
 
 class VIPTierEnum(str, Enum):

@@ -69,7 +69,7 @@ export interface Vehicle {
   model: string;
   year: number;
   purchase_price: number;
-  status: "Available" | "Sold" | "In-Transit";
+  status: "Available" | "Sold" | "In-Transit" | "Booked";
 }
 
 export interface Client {
@@ -147,6 +147,8 @@ export const api = {
     apiFetch<Vehicle>("/api/vehicles/", { method: "POST", body: JSON.stringify(data) }),
   deleteVehicle: (id: number) =>
     apiFetch<void>(`/api/vehicles/${id}`, { method: "DELETE" }),
+  updateVehicle: (id: number, data: Partial<Omit<Vehicle, "id">>) =>
+    apiFetch<Vehicle>(`/api/vehicles/${id}`, { method: "PUT", body: JSON.stringify(data) }),
 
   // Clients
   getClients: (params?: { vip_tier?: string }) => {
