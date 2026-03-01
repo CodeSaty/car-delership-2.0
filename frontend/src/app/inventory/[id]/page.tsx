@@ -63,10 +63,11 @@ const SKETCHFAB_MODEL_MAP: Record<string, { uid: string; animated: boolean }> = 
     // Porsche (NLM-Group animated models with openable doors & hood)
     "porsche_911 turbo s": { uid: "2c3760d955e44cbfa1115564c9191b5d", animated: true },
     "porsche_cayenne turbo gt": { uid: "de1ffd344c41481892511f7fd332c136", animated: false },
-    "porsche_taycan turbo s": { uid: "8568d9d14a994b9cae59499f0dbed21e", animated: false },
+    "porsche_taycan turbo s": { uid: "3657f54c69c242f09fae93104bb20120", animated: false },
     // Ferrari
     "ferrari_f8 tributo": { uid: "8a86c4d634f64f8b8ee836bc93fa6ac8", animated: false },
     "ferrari_roma spider": { uid: "e57f64cb32c54f7e8851ec23875bdff6", animated: false },
+    "ferrari_roma": { uid: "cbc0c13c0fb54fc8bbfa79a9ff99e3aa", animated: false },
     "ferrari_296 gtb": { uid: "17f50b26310847b1a1e701edc0598ba4", animated: false },
     // Lamborghini
     "lamborghini_huracán evo": { uid: "ac4bfe9c5e8d42fda5691f78e8931b95", animated: false },
@@ -81,6 +82,8 @@ const SKETCHFAB_MODEL_MAP: Record<string, { uid: string; animated: boolean }> = 
     // Bentley
     "bentley_continental gt speed": { uid: "950dfe70cd5b4f9ab4c1c13a2693d2a5", animated: false },
     "bentley_flying spur": { uid: "d2161a5b0dfd478abdce11cda5d564d4", animated: false },
+    // BMW
+    "bmw_m5": { uid: "f28407cda1044fd28d82855be8af3e75", animated: false },
 };
 
 /* ─── Interactive Control Button ──────────────────── */
