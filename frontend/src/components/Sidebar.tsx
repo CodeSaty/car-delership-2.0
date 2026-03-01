@@ -95,10 +95,12 @@ export default function Sidebar() {
     return (
         <aside
             style={{
-                width: 260,
+                width: 270,
                 minHeight: "100vh",
-                background: "var(--bg-secondary)",
-                borderRight: "1px solid var(--border-subtle)",
+                background: "rgba(10, 10, 16, 0.75)",
+                backdropFilter: "blur(32px)",
+                WebkitBackdropFilter: "blur(32px)",
+                borderRight: "1px solid rgba(255, 255, 255, 0.05)",
                 display: "flex",
                 flexDirection: "column",
                 padding: "28px 16px",
@@ -108,12 +110,19 @@ export default function Sidebar() {
                 zIndex: 50,
             }}
         >
+            {/* Subtle glow at top */}
+            <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: 200,
+                background: "radial-gradient(ellipse at 50% 0%, rgba(201,169,98,0.06) 0%, transparent 70%)",
+                pointerEvents: "none",
+            }} />
+
             {/* Logo */}
-            <div style={{ padding: "0 12px", marginBottom: 32 }}>
+            <div style={{ padding: "0 12px", marginBottom: 36, position: "relative" }}>
                 <h1
                     className="gold-text"
                     style={{
-                        fontSize: 24,
+                        fontSize: 26,
                         fontWeight: 800,
                         fontFamily: "'Outfit', sans-serif",
                         letterSpacing: "-0.02em",
@@ -123,9 +132,9 @@ export default function Sidebar() {
                 </h1>
                 <p
                     style={{
-                        fontSize: 11,
+                        fontSize: 10,
                         color: "var(--text-muted)",
-                        letterSpacing: "0.15em",
+                        letterSpacing: "0.2em",
                         textTransform: "uppercase",
                         marginTop: 4,
                     }}
@@ -138,25 +147,26 @@ export default function Sidebar() {
             {user && (
                 <div
                     style={{
-                        margin: "0 4px 24px",
-                        padding: "14px 16px",
-                        borderRadius: 12,
+                        margin: "0 4px 28px",
+                        padding: "16px 18px",
+                        borderRadius: 16,
                         background: "rgba(255,255,255,0.02)",
-                        border: "1px solid var(--border-subtle)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                        backdropFilter: "blur(8px)",
                     }}
                 >
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                         <div
                             style={{
-                                width: 36,
-                                height: 36,
-                                borderRadius: "50%",
-                                background: `linear-gradient(135deg, ${roleColor}22, ${roleColor}08)`,
-                                border: `1px solid ${roleColor}30`,
+                                width: 40,
+                                height: 40,
+                                borderRadius: 12,
+                                background: `linear-gradient(135deg, ${roleColor}18, ${roleColor}08)`,
+                                border: `1px solid ${roleColor}25`,
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                fontSize: 13,
+                                fontSize: 14,
                                 fontWeight: 700,
                                 color: roleColor,
                             }}
@@ -164,10 +174,10 @@ export default function Sidebar() {
                             {user.display_name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                            <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                 {user.display_name}
                             </p>
-                            <p style={{ fontSize: 11, color: roleColor, fontWeight: 500 }}>
+                            <p style={{ fontSize: 11, color: roleColor, fontWeight: 500, marginTop: 1 }}>
                                 {roleLabel}
                             </p>
                         </div>
@@ -176,14 +186,15 @@ export default function Sidebar() {
             )}
 
             {/* Navigation */}
-            <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-                {visibleItems.map((item) => {
+            <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, position: "relative" }}>
+                {visibleItems.map((item, i) => {
                     const isActive = pathname === item.href;
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
                             className={`sidebar-link ${isActive ? "active" : ""}`}
+                            style={{ animation: `slideInLeft 0.4s ease-out ${i * 0.05}s both` }}
                         >
                             {item.icon}
                             {item.label}
@@ -192,22 +203,19 @@ export default function Sidebar() {
                 })}
             </nav>
 
+            {/* Divider */}
+            <div className="glass-divider" style={{ margin: "0 12px" }} />
+
             {/* Footer with Logout */}
-            <div
-                style={{
-                    padding: "16px 12px",
-                    borderTop: "1px solid var(--border-subtle)",
-                    marginTop: "auto",
-                }}
-            >
+            <div style={{ padding: "20px 8px 0" }}>
                 <button
                     onClick={logout}
                     style={{
                         width: "100%",
-                        padding: "10px 16px",
-                        borderRadius: 10,
-                        border: "1px solid rgba(239,68,68,0.2)",
-                        background: "rgba(239,68,68,0.06)",
+                        padding: "11px 16px",
+                        borderRadius: 14,
+                        border: "1px solid rgba(239,68,68,0.15)",
+                        background: "rgba(239,68,68,0.04)",
                         color: "#EF4444",
                         fontSize: 13,
                         fontWeight: 500,
@@ -216,10 +224,17 @@ export default function Sidebar() {
                         alignItems: "center",
                         gap: 8,
                         justifyContent: "center",
-                        transition: "all 0.2s ease",
+                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                        backdropFilter: "blur(4px)",
                     }}
-                    onMouseOver={(e) => { (e.target as HTMLElement).style.background = "rgba(239,68,68,0.12)"; }}
-                    onMouseOut={(e) => { (e.target as HTMLElement).style.background = "rgba(239,68,68,0.06)"; }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.background = "rgba(239,68,68,0.1)";
+                        e.currentTarget.style.borderColor = "rgba(239,68,68,0.3)";
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.background = "rgba(239,68,68,0.04)";
+                        e.currentTarget.style.borderColor = "rgba(239,68,68,0.15)";
+                    }}
                 >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -228,7 +243,7 @@ export default function Sidebar() {
                     </svg>
                     Sign Out
                 </button>
-                <p style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 10, textAlign: "center" }}>Aura Drive v1.0</p>
+                <p style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 12, textAlign: "center", letterSpacing: "0.05em" }}>Aura Drive v2.0</p>
             </div>
         </aside>
     );

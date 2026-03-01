@@ -38,7 +38,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <main
                 style={{
                     flex: 1,
-                    marginLeft: 260,
+                    marginLeft: 270,
                     padding: "32px 40px",
                     minHeight: "100vh",
                     background: "var(--bg-primary)",
