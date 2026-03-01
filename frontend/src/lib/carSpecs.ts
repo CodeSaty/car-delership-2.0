@@ -852,3 +852,37 @@ export function getCarSpecs(make: string, model: string): CarSpecs | null {
 export function getKnownCars(): string[] {
     return Object.keys(SPECS_DB);
 }
+
+/**
+ * Returns a map of Make → Model[] from the specs database.
+ * Display names use proper casing matching the dealership inventory.
+ */
+export function getKnownMakesAndModels(): Record<string, string[]> {
+    // Display-name map: lowercase key → proper display name
+    const displayNames: Record<string, { make: string; model: string }> = {
+        "porsche|911 turbo s": { make: "Porsche", model: "911 Turbo S" },
+        "porsche|cayenne turbo gt": { make: "Porsche", model: "Cayenne Turbo GT" },
+        "porsche|taycan turbo s": { make: "Porsche", model: "Taycan Turbo S" },
+        "ferrari|f8 tributo": { make: "Ferrari", model: "F8 Tributo" },
+        "ferrari|roma spider": { make: "Ferrari", model: "Roma Spider" },
+        "ferrari|296 gtb": { make: "Ferrari", model: "296 GTB" },
+        "lamborghini|huracán evo": { make: "Lamborghini", model: "Huracán EVO" },
+        "lamborghini|urus performante": { make: "Lamborghini", model: "Urus Performante" },
+        "lamborghini|revuelto": { make: "Lamborghini", model: "Revuelto" },
+        "aston martin|db12": { make: "Aston Martin", model: "DB12" },
+        "aston martin|vantage v12": { make: "Aston Martin", model: "Vantage V12" },
+        "mclaren|750s": { make: "McLaren", model: "750S" },
+        "mclaren|artura": { make: "McLaren", model: "Artura" },
+        "bentley|continental gt speed": { make: "Bentley", model: "Continental GT Speed" },
+        "bentley|flying spur": { make: "Bentley", model: "Flying Spur" },
+    };
+
+    const result: Record<string, string[]> = {};
+    for (const key of Object.keys(SPECS_DB)) {
+        const display = displayNames[key];
+        if (!display) continue;
+        if (!result[display.make]) result[display.make] = [];
+        if (!result[display.make].includes(display.model)) result[display.make].push(display.model);
+    }
+    return result;
+}

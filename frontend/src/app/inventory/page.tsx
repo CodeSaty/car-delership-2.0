@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { api, Vehicle } from "@/lib/api";
 import { CarBrandIcon } from "@/components/CarBrandIcon";
+import { getKnownMakesAndModels } from "@/lib/carSpecs";
 
 function formatCurrency(value: number) {
     return new Intl.NumberFormat("en-US", {
@@ -48,6 +49,11 @@ export default function InventoryPage() {
     const [form, setForm] = useState({ ...emptyForm });
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState("");
+
+    // Build Make → Model[] map from the specs database
+    const makesAndModels = useMemo(() => getKnownMakesAndModels(), []);
+    const sortedMakes = useMemo(() => Object.keys(makesAndModels).sort(), [makesAndModels]);
+    const availableModels = form.make ? (makesAndModels[form.make] || []).sort() : [];
 
     useEffect(() => { loadVehicles(); }, [statusFilter, makeFilter]);
 
@@ -205,13 +211,20 @@ export default function InventoryPage() {
                                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                                     <div>
                                         <label style={{ fontSize: 12, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 6 }}>Make *</label>
-                                        <input className="input-dark" type="text" required placeholder="e.g., Porsche" value={form.make}
-                                            onChange={(e) => setForm({ ...form, make: e.target.value })} style={{ width: "100%" }} />
+                                        <select className="input-dark" required value={form.make}
+                                            onChange={(e) => setForm({ ...form, make: e.target.value, model: "" })} style={{ width: "100%" }}>
+                                            <option value="">Select Make</option>
+                                            {sortedMakes.map((m) => <option key={m} value={m}>{m}</option>)}
+                                        </select>
                                     </div>
                                     <div>
                                         <label style={{ fontSize: 12, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 6 }}>Model *</label>
-                                        <input className="input-dark" type="text" required placeholder="e.g., 911 Turbo S" value={form.model}
-                                            onChange={(e) => setForm({ ...form, model: e.target.value })} style={{ width: "100%" }} />
+                                        <select className="input-dark" required value={form.model}
+                                            onChange={(e) => setForm({ ...form, model: e.target.value })} style={{ width: "100%" }}
+                                            disabled={!form.make}>
+                                            <option value="">{form.make ? "Select Model" : "Select a make first"}</option>
+                                            {availableModels.map((m) => <option key={m} value={m}>{m}</option>)}
+                                        </select>
                                     </div>
                                 </div>
                                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
